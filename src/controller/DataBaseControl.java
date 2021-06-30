@@ -19,7 +19,7 @@ public class DataBaseControl {
     public Statement stm;  // Prepare and research on DataBase
     public ResultSet rs;   // Storage the research result
     private String driver = "org.postgresql.Driver";    // Identify what DataBase is being used
-    private String path = "jdbc://postgresql://localhost:5432/jh-sublime";    // Path where is located the connection with the DataBase
+    private String path = "jdbc:postgresql://localhost:5432/jh-sublime";    // Path where is located the connection with the DataBase
     private String user = "postgres";
     private String password = "pzus1717";
     public Connection conn; // Establish the connection with DataBase

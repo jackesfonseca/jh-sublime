@@ -5,17 +5,20 @@
  */
 package view;
 
+import controller.DataBaseControl;
+
 /**
  *
  * @author jackes
  */
 public class HomeScreen extends javax.swing.JFrame {
-
+    DataBaseControl dataBaseControl = new DataBaseControl();
     /**
      * Creates new form HomeScreen
      */
     public HomeScreen() {
         initComponents();
+        dataBaseControl.dataBaseConnection();
     }
 
     /**
