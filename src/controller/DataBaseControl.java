@@ -24,7 +24,7 @@ public class DataBaseControl {
     private String password = "pzus1717";
     public Connection conn; // Establish the connection with DataBase
     
-    public void dataBaseConnection() {
+    public void dataBaseConnect() {
         try {
             System.setProperty("jdbc.Drivers", driver); // Sets the driver connection property
             conn = DriverManager.getConnection(path, user, password);   // Establish the connection with Database
