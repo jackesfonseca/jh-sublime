@@ -88,8 +88,8 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-        System.exit(0);
         dataBaseControl.dataBaseDisconnect();
+        System.exit(0);
     }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
