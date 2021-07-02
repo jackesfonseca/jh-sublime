@@ -35,6 +35,10 @@ public class HomeScreen extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -50,8 +54,20 @@ public class HomeScreen extends javax.swing.JFrame {
         jMenuItem2.setText("Produtos");
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("Categorias");
+        jMenuItem3.setText("Fornecedores");
         jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Estados");
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setText("Cidades");
+        jMenu1.add(jMenuItem5);
+
+        jMenuItem6.setText("Bairros");
+        jMenu1.add(jMenuItem6);
+
+        jMenuItem7.setText("Telefones");
+        jMenu1.add(jMenuItem7);
 
         jMenuBar1.add(jMenu1);
 
@@ -136,5 +152,9 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }
