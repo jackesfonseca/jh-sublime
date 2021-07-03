@@ -46,17 +46,24 @@ public class HomeScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("jh-sublime");
 
-        jMenu1.setText("Cadastros");
+        jMenuBar1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
+        jMenu1.setText("Cadastros");
+        jMenu1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem1.setText("Clientes");
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem2.setText("Produtos");
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem3.setText("Fornecedores");
         jMenu1.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem4.setText("Estados");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,24 +72,30 @@ public class HomeScreen extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem5.setText("Cidades");
         jMenu1.add(jMenuItem5);
 
+        jMenuItem6.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem6.setText("Bairros");
         jMenu1.add(jMenuItem6);
 
+        jMenuItem7.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem7.setText("Telefones");
         jMenu1.add(jMenuItem7);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Vender");
+        jMenu2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Relatórios");
+        jMenu3.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Sair");
+        jMenu4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu4MouseClicked(evt);
@@ -100,7 +113,7 @@ public class HomeScreen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 311, Short.MAX_VALUE)
+            .addGap(0, 533, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(800, 600));

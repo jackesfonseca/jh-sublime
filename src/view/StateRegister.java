@@ -65,12 +65,22 @@ public class StateRegister extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel2.setText("Código");
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel3.setText("Nome");
 
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel4.setText("Sigla");
 
+        jTextFieldCod.setEnabled(false);
+
+        jTextFieldName.setEnabled(false);
+
+        jTextFieldFU.setEnabled(false);
+
+        jTable1.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -84,35 +94,53 @@ public class StateRegister extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButtonSave.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonSave.setText("Salvar");
         jButtonSave.setToolTipText("Salvar cadastro");
+        jButtonSave.setEnabled(false);
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
             }
         });
 
+        jButtonNew.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNew.setText("Novo");
         jButtonNew.setToolTipText("Novo cadastro");
+        jButtonNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewActionPerformed(evt);
+            }
+        });
 
+        jButtonDelete.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonDelete.setText("Excluir");
         jButtonDelete.setToolTipText("Excluir cadastro");
+        jButtonDelete.setEnabled(false);
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
             }
         });
 
+        jButtonEdit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonEdit.setText("Editar");
         jButtonEdit.setToolTipText("Editar cadastro");
+        jButtonEdit.setEnabled(false);
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditActionPerformed(evt);
             }
         });
 
+        jButtonExit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonExit.setText("Sair");
         jButtonExit.setToolTipText("Sair do formulário");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,34 +149,30 @@ public class StateRegister extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jButtonNew))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 162, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(106, 140, Short.MAX_VALUE)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jButtonNew)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(jButtonDelete)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jButtonEdit)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonExit)
-                            .addComponent(jTextFieldFU, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonSave)
+                                .addGap(25, 25, 25)
+                                .addComponent(jButtonSave)
+                                .addGap(36, 36, 36)
+                                .addComponent(jButtonDelete)
+                                .addGap(41, 41, 41)
+                                .addComponent(jButtonEdit)))
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonExit)
+                    .addComponent(jTextFieldFU, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
             .addComponent(jScrollPane1)
         );
@@ -167,17 +191,17 @@ public class StateRegister extends javax.swing.JFrame {
                     .addComponent(jTextFieldFU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSave)
                     .addComponent(jButtonNew)
                     .addComponent(jButtonDelete)
                     .addComponent(jButtonEdit)
-                    .addComponent(jButtonExit))
+                    .addComponent(jButtonExit)
+                    .addComponent(jButtonSave))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 22)); // NOI18N
         jLabel1.setText("Cadastro de Estados");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,14 +209,13 @@ public class StateRegister extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(jLabel1)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(197, 197, 197))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +227,7 @@ public class StateRegister extends javax.swing.JFrame {
                 .addGap(455, 455, 455))
         );
 
-        setSize(new java.awt.Dimension(588, 443));
+        setSize(new java.awt.Dimension(617, 443));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -215,21 +238,59 @@ public class StateRegister extends javax.swing.JFrame {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         try {
             // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into state (name_state, fu_state)values(?,?)");
-            pst.setString(1, jTextFieldName.getText());
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into state (name_state, fu_state)values(?,?)"); //passing sql to insert data
+            pst.setString(1, jTextFieldName.getText()); //passing parameters to insert data
             pst.setString(2, jTextFieldFU.getText());
-            pst.executeUpdate();
+            pst.executeUpdate(); // execute insert
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar a inserção!\n ERRO: " + ex.getMessage());
         }
+        
+        jTextFieldCod.setText("");
+        jTextFieldFU.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonSave.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonNew.setEnabled(true);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
-        dataBaseControl.executeSQL("delete from state where fu_state='"+jTextFieldFU.getText()+"'");
+        dataBaseControl.executeSQL("delete from state where fu_state='"+jTextFieldFU.getText()+"'"); //method call to delete data
         JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+        
+        jTextFieldCod.setText("");
+        jTextFieldFU.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonSave.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonNew.setEnabled(true);
     }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
+        // TODO add your handling code here:
+        jTextFieldCod.setText("");
+        jTextFieldFU.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
+        jButtonSave.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonNew.setEnabled(false);
+    }//GEN-LAST:event_jButtonNewActionPerformed
 
     /**
      * @param args the command line arguments
