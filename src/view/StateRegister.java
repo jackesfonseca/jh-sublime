@@ -97,6 +97,11 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonDelete.setText("Excluir");
         jButtonDelete.setToolTipText("Excluir cadastro");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
         jButtonEdit.setText("Editar");
         jButtonEdit.setToolTipText("Editar cadastro");
@@ -214,11 +219,17 @@ public class StateRegister extends javax.swing.JFrame {
             pst.setString(1, jTextFieldName.getText());
             pst.setString(2, jTextFieldFU.getText());
             pst.executeUpdate();
-            JOptionPane.showInputDialog(rootPane, "Salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showInputDialog(rootPane, "Nã foi possível realizar a inserção!\n ERRO: " + ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a inserção!\n ERRO: " + ex.getMessage());
         }
     }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        // TODO add your handling code here:
+        dataBaseControl.executeSQL("delete from state where fu_state='"+jTextFieldFU.getText()+"'");
+        JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     /**
      * @param args the command line arguments

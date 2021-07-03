@@ -44,4 +44,13 @@ public class DataBaseControl {
         }
     }
     
+    public void executeSQL(String sql) {
+        try {
+            stm = conn.createStatement(rs.TYPE_SCROLL_SENSITIVE, rs.CONCUR_READ_ONLY);
+            rs = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(null, "Erro de executeSQL\n Erro: " + ex.getMessage());
+        }
+    }
+    
 }
