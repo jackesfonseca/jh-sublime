@@ -28,7 +28,7 @@ public class DataBaseControl {
         try {
             System.setProperty("jdbc.Drivers", driver); // Sets the driver connection property
             conn = DriverManager.getConnection(path, user, password);   // Establish the connection with Database
-            JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao conectar com o banco de dados!\n Erro: " + ex.getMessage());
         }
