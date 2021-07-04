@@ -78,10 +78,13 @@ public class StateRegister extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel4.setText("Sigla");
 
+        jTextFieldCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jTextFieldCod.setEnabled(false);
 
+        jTextFieldName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jTextFieldName.setEnabled(false);
 
+        jTextFieldFU.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jTextFieldFU.setEnabled(false);
 
         jTable1.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
@@ -282,6 +285,17 @@ public class StateRegister extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update state set name_state=?, fu_state=? where id_state=?"); //passing sql to insert data
+            pst.setString(1, jTextFieldName.getText()); //passing parameters to insert data
+            pst.setString(2, jTextFieldFU.getText());
+            pst.setInt(3, Integer.parseInt(jTextFieldCod.getText()));
+            pst.executeUpdate(); // execute insert
+            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+        }
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
@@ -343,6 +357,10 @@ public class StateRegister extends javax.swing.JFrame {
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
         // TODO add your handling code here:
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
         
         try {
             dataBaseControl.executeSQL("select * from state");
@@ -357,6 +375,10 @@ public class StateRegister extends javax.swing.JFrame {
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
         // TODO add your handling code here:
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
         
         try {
             dataBaseControl.executeSQL("select * from state");
@@ -371,8 +393,12 @@ public class StateRegister extends javax.swing.JFrame {
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
         // TODO add your handling code here:
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
+        
         try {
-            dataBaseControl.executeSQL("select * from state");
             dataBaseControl.rs.previous();
             jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_state")));
             jTextFieldFU.setText(dataBaseControl.rs.getString("fu_state"));
@@ -384,8 +410,12 @@ public class StateRegister extends javax.swing.JFrame {
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
         // TODO add your handling code here:
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
+        
         try {
-            dataBaseControl.executeSQL("select * from state");
             dataBaseControl.rs.next();
             jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_state")));
             jTextFieldFU.setText(dataBaseControl.rs.getString("fu_state"));

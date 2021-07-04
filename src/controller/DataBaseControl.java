@@ -38,7 +38,7 @@ public class DataBaseControl {
     public void dataBaseDisconnect() {
         try {
             conn.close();
-            JOptionPane.showMessageDialog(null, "Desconectado com sucesso");
+            //JOptionPane.showMessageDialog(null, "Desconectado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao desconectar com o banco de dados!\n Erro: " + ex.getMessage());
         }
