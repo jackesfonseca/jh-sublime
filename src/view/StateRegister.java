@@ -72,6 +72,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JH Sublime");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -109,7 +110,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonSave.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonSave.setText("Salvar");
-        jButtonSave.setToolTipText("Salvar cadastro");
+        jButtonSave.setToolTipText("Salvar o novo estado");
         jButtonSave.setEnabled(false);
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,7 +120,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonNew.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNew.setText("Novo");
-        jButtonNew.setToolTipText("Novo cadastro");
+        jButtonNew.setToolTipText("Cadastar novo estado");
         jButtonNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNewActionPerformed(evt);
@@ -138,7 +139,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonEdit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonEdit.setText("Editar");
-        jButtonEdit.setToolTipText("Editar cadastro");
+        jButtonEdit.setToolTipText("Salvar edição feita no cadastro");
         jButtonEdit.setEnabled(false);
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,6 +158,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonFirst.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonFirst.setText("<<");
+        jButtonFirst.setToolTipText("Exibir primeiro estado cadastrado");
         jButtonFirst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFirstActionPerformed(evt);
@@ -165,6 +167,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonPrevious.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonPrevious.setText("<");
+        jButtonPrevious.setToolTipText("Exibir estado anterior cadastrado");
         jButtonPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPreviousActionPerformed(evt);
@@ -173,6 +176,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonNext.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNext.setText(">");
+        jButtonNext.setToolTipText("Exibir próximo estado cadastrado");
         jButtonNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNextActionPerformed(evt);
@@ -181,6 +185,7 @@ public class StateRegister extends javax.swing.JFrame {
 
         jButtonLast.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonLast.setText(">>");
+        jButtonLast.setToolTipText("Exibir último estado cadastrado");
         jButtonLast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLastActionPerformed(evt);
