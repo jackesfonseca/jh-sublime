@@ -5,17 +5,25 @@
  */
 package view;
 
+import controller.DataBaseControl;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jackes
  */
 public class CityRegister extends javax.swing.JFrame {
-
+    DataBaseControl dataBaseControl = new DataBaseControl();
+    
     /**
      * Creates new form CityRegister
      */
     public CityRegister() {
         initComponents();
+        dataBaseControl.dataBaseConnect();
     }
 
     /**
@@ -29,29 +37,29 @@ public class CityRegister extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCity = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldCod = new javax.swing.JTextField();
+        jTextFieldName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jComboBoxState = new javax.swing.JComboBox<>();
+        jButtonNew = new javax.swing.JButton();
+        jButtonSave = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
+        jButtonEdit = new javax.swing.JButton();
+        jButtonFirst = new javax.swing.JButton();
+        jButtonPrevious = new javax.swing.JButton();
+        jButtonNext = new javax.swing.JButton();
+        jButtonLast = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCity.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -62,50 +70,80 @@ public class CityRegister extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableCity);
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel2.setText("Código");
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jLabel3.setText("Nome");
+        jLabel3.setText("Cidade");
 
-        jTextField1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldCod.setEnabled(false);
 
-        jTextField2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldName.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel4.setText("Estado");
 
-        jComboBox1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxState.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jComboBoxState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton1.setText("Novo");
+        jButtonNew.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonNew.setText("Novo");
+        jButtonNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton2.setText("Salvar");
+        jButtonSave.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonSave.setText("Salvar");
+        jButtonSave.setEnabled(false);
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton3.setText("Excluir");
+        jButtonDelete.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonDelete.setText("Excluir");
+        jButtonDelete.setEnabled(false);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton4.setText("Editar");
+        jButtonEdit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonEdit.setText("Editar");
+        jButtonEdit.setEnabled(false);
+        jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditActionPerformed(evt);
+            }
+        });
 
-        jButton5.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton5.setText("<<");
+        jButtonFirst.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonFirst.setText("<<");
 
-        jButton6.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton6.setText("<");
+        jButtonPrevious.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonPrevious.setText("<");
 
-        jButton7.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton7.setText(">");
+        jButtonNext.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonNext.setText(">");
 
-        jButton8.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton8.setText(">>");
+        jButtonLast.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonLast.setText(">>");
 
-        jButton9.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jButton9.setText("Sair");
+        jButtonExit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jButtonExit.setText("Sair");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,34 +155,34 @@ public class CityRegister extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                    .addComponent(jButtonNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonNext, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonLast, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(133, 133, 133)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -154,24 +192,24 @@ public class CityRegister extends javax.swing.JFrame {
                 .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jButtonNew)
+                    .addComponent(jButtonSave)
+                    .addComponent(jButtonDelete)
+                    .addComponent(jButtonEdit)
+                    .addComponent(jButtonFirst)
+                    .addComponent(jButtonPrevious)
+                    .addComponent(jButtonNext)
+                    .addComponent(jButtonLast)
+                    .addComponent(jButtonExit))
                 .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -185,7 +223,7 @@ public class CityRegister extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(336, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(331, 331, 331))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -206,6 +244,76 @@ public class CityRegister extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(880, 515));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
+        // TODO add your handling code here:
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(false);
+        jButtonSave.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+    }//GEN-LAST:event_jButtonNewActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        try {
+            // TODO add your handling code here:
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into city (name_city) values (?)");
+            pst.setString(1, jTextFieldName.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+        }
+        
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        dataBaseControl.executeSQL("delete from city where id_city='" + Integer.parseInt(jTextFieldCod.getText()) + "'");
+        JOptionPane.showMessageDialog(null, "Excluído com sucesso");
+        
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update city set name_city=? where id_city=?");
+            pst.setString(1, jTextFieldName.getText());
+            pst.setInt(2, Integer.parseInt(jTextFieldCod.getText()));
+            pst.executeUpdate();
+                    } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+        }
+        
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+    }//GEN-LAST:event_jButtonEditActionPerformed
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButtonExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,24 +351,24 @@ public class CityRegister extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonEdit;
+    private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonFirst;
+    private javax.swing.JButton jButtonLast;
+    private javax.swing.JButton jButtonNew;
+    private javax.swing.JButton jButtonNext;
+    private javax.swing.JButton jButtonPrevious;
+    private javax.swing.JButton jButtonSave;
+    private javax.swing.JComboBox<String> jComboBoxState;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTableCity;
+    private javax.swing.JTextField jTextFieldCod;
+    private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 }
