@@ -5,11 +5,13 @@
  */
 package view;
 
+import controller.CityControl;
 import controller.DataBaseControl;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.CityModel;
 
 /**
  *
@@ -267,14 +269,19 @@ public class CityRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+
         try {
-            // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into city (name_city) values (?)");
-            pst.setString(1, jTextFieldName.getText());
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            CityModel city = new CityModel();
+            city.setName(jTextFieldName.getText());
+            dataBaseControl.executeSQL("select * from state where name_state=" + jComboBoxState.getSelectedItem());
+            dataBaseControl.rs.first();
+            city.setCodState(dataBaseControl.rs.getInt("id_state"));
+            
+            CityControl cityControl = new CityControl();
+            cityControl.insert(city);
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+            Logger.getLogger(CityRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         jTextFieldCod.setText("");
