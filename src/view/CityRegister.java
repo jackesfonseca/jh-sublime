@@ -24,6 +24,16 @@ public class CityRegister extends javax.swing.JFrame {
     public CityRegister() {
         initComponents();
         dataBaseControl.dataBaseConnect();
+        dataBaseControl.executeSQL("select * from state order by name_state");
+        jComboBoxState.removeAllItems();
+        try {
+            dataBaseControl.rs.first();
+            do {
+                jComboBoxState.addItem(dataBaseControl.rs.getString("name_state"));
+            } while(dataBaseControl.rs.next());
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
+        }
     }
 
     /**
@@ -61,13 +71,13 @@ public class CityRegister extends javax.swing.JFrame {
 
         jTableCity.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(jTableCity);
