@@ -5,15 +5,29 @@
  */
 package controller;
 
-import javax.swing.JOptionPane;
 import model.CityModel;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author jackes
  */
 public class CityControl {
+    DataBaseControl dataBaseControl = new DataBaseControl();
+    
     public void insert(CityModel city) {
-        JOptionPane.showMessageDialog(null, city.getName());
+        try {
+            dataBaseControl.dataBaseConnect();
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into city(name_city, id_state) values(?,?)");
+            pst.setString(1, city.getName());
+            pst.setInt(2, city.getCodState());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+        }
     }
 }

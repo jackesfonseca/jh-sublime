@@ -133,13 +133,13 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        StateRegister stateRegister = new StateRegister();
+        StateView stateRegister = new StateView();
         stateRegister.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        CityRegister cityRegister = new CityRegister();
+        CityView cityRegister = new CityView();
         cityRegister.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 

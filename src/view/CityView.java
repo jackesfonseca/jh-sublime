@@ -17,13 +17,13 @@ import model.CityModel;
  *
  * @author jackes
  */
-public class CityRegister extends javax.swing.JFrame {
+public class CityView extends javax.swing.JFrame {
     DataBaseControl dataBaseControl = new DataBaseControl();
     
     /**
      * Creates new form CityRegister
      */
-    public CityRegister() {
+    public CityView() {
         initComponents();
         dataBaseControl.dataBaseConnect();
         dataBaseControl.executeSQL("select * from state order by name_state");
@@ -101,6 +101,7 @@ public class CityRegister extends javax.swing.JFrame {
 
         jComboBoxState.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jComboBoxState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxState.setEnabled(false);
 
         jButtonNew.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNew.setText("Novo");
@@ -266,6 +267,7 @@ public class CityRegister extends javax.swing.JFrame {
         jButtonSave.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
+        jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
@@ -273,7 +275,7 @@ public class CityRegister extends javax.swing.JFrame {
         try {
             CityModel city = new CityModel();
             city.setName(jTextFieldName.getText());
-            dataBaseControl.executeSQL("select * from state where name_state=" + jComboBoxState.getSelectedItem());
+            dataBaseControl.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
             dataBaseControl.rs.first();
             city.setCodState(dataBaseControl.rs.getInt("id_state"));
             
@@ -281,7 +283,7 @@ public class CityRegister extends javax.swing.JFrame {
             cityControl.insert(city);
             
         } catch (SQLException ex) {
-            Logger.getLogger(CityRegister.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CityView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         jTextFieldCod.setText("");
@@ -291,6 +293,7 @@ public class CityRegister extends javax.swing.JFrame {
         jButtonSave.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonEdit.setEnabled(false);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
@@ -304,6 +307,7 @@ public class CityRegister extends javax.swing.JFrame {
         jButtonSave.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonEdit.setEnabled(false);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
@@ -325,6 +329,7 @@ public class CityRegister extends javax.swing.JFrame {
         jButtonSave.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonEdit.setEnabled(false);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
@@ -349,20 +354,21 @@ public class CityRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CityRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CityView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CityRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CityView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CityRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CityView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CityRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CityView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CityRegister().setVisible(true);
+                new CityView().setVisible(true);
             }
         });
     }
