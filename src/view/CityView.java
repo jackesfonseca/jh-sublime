@@ -21,6 +21,7 @@ public class CityView extends javax.swing.JFrame {
     DataBaseControl dataBaseControlState = new DataBaseControl();
     DataBaseControl dataBaseControlCity = new DataBaseControl();
     CityModel city = new CityModel();
+    CityControl cityControl = new CityControl();
     
     /**
      * Creates new form CityRegister
@@ -301,11 +302,9 @@ public class CityView extends javax.swing.JFrame {
             dataBaseControlState.rs.first();
             city.setCodState(dataBaseControlState.rs.getInt("id_state"));
             
-            CityControl cityControl = new CityControl();
-            cityControl.insert(city);
-            
+            cityControl.insert(city);      
         } catch (SQLException ex) {
-            Logger.getLogger(CityView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
         }
         
         jTextFieldCod.setText("");
@@ -319,8 +318,17 @@ public class CityView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        dataBaseControlCity.executeSQL("delete from city where id_city='" + Integer.parseInt(jTextFieldCod.getText()) + "'");
-        JOptionPane.showMessageDialog(null, "Excluído com sucesso");
+         try {
+            city.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            city.setName(jTextFieldName.getText());
+            dataBaseControlCity.rs.getInt("id_state");
+            
+            cityControl.delete(city);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro!\n ERRO: " + ex.getMessage());
+        }
+        
         
         jTextFieldCod.setText("");
         jTextFieldName.setText("");

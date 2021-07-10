@@ -19,8 +19,9 @@ public class CityControl {
     DataBaseControl dataBaseControl = new DataBaseControl();
     
     public void insert(CityModel city) {
+        dataBaseControl.dataBaseConnect();
         try {
-            dataBaseControl.dataBaseConnect();
+            
             PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into city(name_city, id_state) values(?,?)");
             pst.setString(1, city.getName());
             pst.setInt(2, city.getCodState());
@@ -29,6 +30,18 @@ public class CityControl {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
         }
-       
+       dataBaseControl.dataBaseDisconnect();
+    }
+    
+    public void delete(CityModel city) {
+        dataBaseControl.dataBaseConnect();
+        try {
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("delete from city where id_city=?");
+            pst.setInt(1, city.getCod());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro!\n ERRO: " + ex.getMessage());
+        }
     }
 }
