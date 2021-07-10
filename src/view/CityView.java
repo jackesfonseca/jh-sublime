@@ -18,21 +18,24 @@ import model.CityModel;
  * @author jackes
  */
 public class CityView extends javax.swing.JFrame {
-    DataBaseControl dataBaseControl = new DataBaseControl();
+    DataBaseControl dataBaseControlState = new DataBaseControl();
+    DataBaseControl dataBaseControlCity = new DataBaseControl();
+    CityModel city = new CityModel();
     
     /**
      * Creates new form CityRegister
      */
     public CityView() {
         initComponents();
-        dataBaseControl.dataBaseConnect();
-        dataBaseControl.executeSQL("select * from state order by name_state");
+        dataBaseControlState.dataBaseConnect();
+        dataBaseControlCity.dataBaseConnect();
+        dataBaseControlState.executeSQL("select * from state order by name_state");
         jComboBoxState.removeAllItems();
         try {
-            dataBaseControl.rs.first();
+            dataBaseControlState.rs.first();
             do {
-                jComboBoxState.addItem(dataBaseControl.rs.getString("name_state"));
-            } while(dataBaseControl.rs.next());
+                jComboBoxState.addItem(dataBaseControlState.rs.getString("name_state"));
+            } while(dataBaseControlState.rs.next());
         } catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
         }
@@ -140,15 +143,35 @@ public class CityView extends javax.swing.JFrame {
 
         jButtonFirst.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonFirst.setText("<<");
+        jButtonFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFirstActionPerformed(evt);
+            }
+        });
 
         jButtonPrevious.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonPrevious.setText("<");
+        jButtonPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPreviousActionPerformed(evt);
+            }
+        });
 
         jButtonNext.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNext.setText(">");
+        jButtonNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNextActionPerformed(evt);
+            }
+        });
 
         jButtonLast.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonLast.setText(">>");
+        jButtonLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLastActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonExit.setText("Sair");
@@ -273,11 +296,10 @@ public class CityView extends javax.swing.JFrame {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 
         try {
-            CityModel city = new CityModel();
             city.setName(jTextFieldName.getText());
-            dataBaseControl.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
-            dataBaseControl.rs.first();
-            city.setCodState(dataBaseControl.rs.getInt("id_state"));
+            dataBaseControlState.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
+            dataBaseControlState.rs.first();
+            city.setCodState(dataBaseControlState.rs.getInt("id_state"));
             
             CityControl cityControl = new CityControl();
             cityControl.insert(city);
@@ -297,7 +319,7 @@ public class CityView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        dataBaseControl.executeSQL("delete from city where id_city='" + Integer.parseInt(jTextFieldCod.getText()) + "'");
+        dataBaseControlCity.executeSQL("delete from city where id_city='" + Integer.parseInt(jTextFieldCod.getText()) + "'");
         JOptionPane.showMessageDialog(null, "Excluído com sucesso");
         
         jTextFieldCod.setText("");
@@ -314,11 +336,11 @@ public class CityView extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update city set name_city=? where id_city=?");
+            PreparedStatement pst = dataBaseControlCity.conn.prepareStatement("update city set name_city=? where id_city=?");
             pst.setString(1, jTextFieldName.getText());
             pst.setInt(2, Integer.parseInt(jTextFieldCod.getText()));
             pst.executeUpdate();
-                    } catch (SQLException ex) {
+            } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
         }
         
@@ -336,6 +358,93 @@ public class CityView extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
+        try {
+            // TODO add your handling code here:
+            dataBaseControlCity.executeSQL("select * from city order by id_city");
+            dataBaseControlCity.rs.first();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlCity.rs.getInt("id_city")));
+            jTextFieldName.setText(dataBaseControlCity.rs.getString("name_city"));
+            dataBaseControlState.executeSQL("select * from state where id_state=" + dataBaseControlCity.rs.getInt("id_state"));
+            dataBaseControlState.rs.first();
+            jComboBoxState.setSelectedItem(dataBaseControlState.rs.getString("name_state"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jComboBoxState.setEnabled(true);
+    }//GEN-LAST:event_jButtonFirstActionPerformed
+
+    private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //dataBaseControlCity.executeSQL("select * from city order by id_city");
+            dataBaseControlCity.rs.previous();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlCity.rs.getInt("id_city")));
+            jTextFieldName.setText(dataBaseControlCity.rs.getString("name_city"));
+            dataBaseControlState.executeSQL("select * from state where id_state=" + dataBaseControlCity.rs.getInt("id_state"));
+            dataBaseControlState.rs.first();
+            jComboBoxState.setSelectedItem(dataBaseControlState.rs.getString("name_state"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jComboBoxState.setEnabled(true);
+    }//GEN-LAST:event_jButtonPreviousActionPerformed
+
+    private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //dataBaseControlCity.executeSQL("select * from city order by id_city");
+            dataBaseControlCity.rs.next();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlCity.rs.getInt("id_city")));
+            jTextFieldName.setText(dataBaseControlCity.rs.getString("name_city"));
+            dataBaseControlState.executeSQL("select * from state where id_state=" + dataBaseControlCity.rs.getInt("id_state"));
+            dataBaseControlState.rs.first();
+            jComboBoxState.setSelectedItem(dataBaseControlState.rs.getString("name_state"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jComboBoxState.setEnabled(true);
+    }//GEN-LAST:event_jButtonNextActionPerformed
+
+    private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            dataBaseControlCity.executeSQL("select * from city order by id_city");
+            dataBaseControlCity.rs.last();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlCity.rs.getInt("id_city")));
+            jTextFieldName.setText(dataBaseControlCity.rs.getString("name_city"));
+            dataBaseControlState.executeSQL("select * from state where id_state=" + dataBaseControlCity.rs.getInt("id_state"));
+            dataBaseControlState.rs.first();
+            jComboBoxState.setSelectedItem(dataBaseControlState.rs.getString("name_state"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jComboBoxState.setEnabled(true);
+    }//GEN-LAST:event_jButtonLastActionPerformed
 
     /**
      * @param args the command line arguments

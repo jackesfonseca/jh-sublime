@@ -29,5 +29,6 @@ public class CityControl {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
         }
+       
     }
 }
