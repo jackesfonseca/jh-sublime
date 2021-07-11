@@ -294,8 +294,8 @@ public class CityView extends javax.swing.JFrame {
         jTextFieldName.setEnabled(true);
         jButtonNew.setEnabled(false);
         jButtonSave.setEnabled(true);
-        jButtonDelete.setEnabled(true);
-        jButtonEdit.setEnabled(true);
+        //jButtonDelete.setEnabled(true);
+        //jButtonEdit.setEnabled(true);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
@@ -391,6 +391,7 @@ public class CityView extends javax.swing.JFrame {
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
@@ -413,6 +414,7 @@ public class CityView extends javax.swing.JFrame {
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
@@ -435,6 +437,7 @@ public class CityView extends javax.swing.JFrame {
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonNextActionPerformed
 
@@ -457,6 +460,7 @@ public class CityView extends javax.swing.JFrame {
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonLastActionPerformed
 

@@ -303,7 +303,7 @@ public class StateView extends javax.swing.JFrame {
         state.setName(jTextFieldName.getText());
         state.setFU(jTextFieldFU.getText());
         state.setCod(Integer.parseInt(jTextFieldCod.getText()));
-        stateControl.insert(state);
+        stateControl.edit(state);
         
         fillTable("select * from state order by id_state");
     }//GEN-LAST:event_jButtonEditActionPerformed
@@ -358,9 +358,10 @@ public class StateView extends javax.swing.JFrame {
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
         jButtonSave.setEnabled(true);
-        jButtonEdit.setEnabled(true);
-        jButtonDelete.setEnabled(true);
         jButtonNew.setEnabled(false);
+        //jButtonEdit.setEnabled(true);
+        //jButtonDelete.setEnabled(true);
+        //jButtonNew.setEnabled(false);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
@@ -369,6 +370,7 @@ public class StateView extends javax.swing.JFrame {
         jButtonDelete.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
+        jButtonNew.setEnabled(true);
 
         try {
             dataBaseControl.executeSQL("select * from state");
@@ -387,6 +389,7 @@ public class StateView extends javax.swing.JFrame {
         jButtonDelete.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
+        jButtonNew.setEnabled(true);
 
         try {
             dataBaseControl.executeSQL("select * from state");
@@ -405,6 +408,7 @@ public class StateView extends javax.swing.JFrame {
         jButtonDelete.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
+        jButtonNew.setEnabled(true);
 
         try {
             dataBaseControl.rs.previous();
@@ -422,6 +426,7 @@ public class StateView extends javax.swing.JFrame {
         jButtonDelete.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
+        jButtonNew.setEnabled(true);
 
         try {
             dataBaseControl.rs.next();
