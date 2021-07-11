@@ -300,17 +300,11 @@ public class StateView extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update state set name_state=?, fu_state=? where id_state=?"); //passing sql to insert data
-            pst.setString(1, jTextFieldName.getText()); //passing parameters to insert data
-            pst.setString(2, jTextFieldFU.getText());
-            pst.setInt(3, Integer.parseInt(jTextFieldCod.getText()));
-            pst.executeUpdate(); // execute insert
-            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
-        }
+        state.setName(jTextFieldName.getText());
+        state.setFU(jTextFieldFU.getText());
+        state.setCod(Integer.parseInt(jTextFieldCod.getText()));
+        stateControl.insert(state);
+        
         fillTable("select * from state order by id_state");
     }//GEN-LAST:event_jButtonEditActionPerformed
 
@@ -334,8 +328,9 @@ public class StateView extends javax.swing.JFrame {
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
-        dataBaseControl.executeSQL("delete from state where fu_state='" + jTextFieldFU.getText() + "'"); //method call to delete data
-        JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+        state.setName(jTextFieldName.getText());
+        state.setFU(jTextFieldFU.getText());
+        stateControl.delete(state);
 
         jTextFieldCod.setText("");
         jTextFieldFU.setText("");

@@ -32,4 +32,29 @@ public class StateControl {
         }
     }
     
+    public void delete(StateModel state) {
+        dataBaseControl.dataBaseConnect();
+        
+        dataBaseControl.executeSQL("delete from state where fu_state='" + state.getFU() + "'"); //method call to delete data
+        JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+        
+        dataBaseControl.dataBaseDisconnect();
+    }
+    
+    public void edit(StateModel state) {
+        dataBaseControl.dataBaseConnect();
+        
+        try {
+            // TODO add your handling code here:
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update state set name_state=?, fu_state=? where id_state=?"); //passing sql to insert data
+            pst.setString(1, state.getName()); //passing parameters to insert data
+            pst.setString(2, state.getFU());
+            pst.setInt(3, state.getCod());
+            pst.executeUpdate(); // execute insert
+            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+        }
+    }
+    
 }

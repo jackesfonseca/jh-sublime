@@ -41,6 +41,7 @@ public class CityControl {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro!\n ERRO: " + ex.getMessage());
         }
+        dataBaseControl.dataBaseDisconnect();
     }
     
     public void edit(CityModel city) {
@@ -56,5 +57,6 @@ public class CityControl {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
         }
+        dataBaseControl.dataBaseDisconnect();
     }
 }

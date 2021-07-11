@@ -77,6 +77,7 @@ public class CityView extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jTableCity.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jTableCity.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -196,7 +197,7 @@ public class CityView extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jButtonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -363,15 +364,6 @@ public class CityView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
         }
-        
-        jTextFieldCod.setText("");
-        jTextFieldName.setText("");
-        jTextFieldName.setEnabled(false);
-        jButtonNew.setEnabled(true);
-        jButtonSave.setEnabled(false);
-        jButtonDelete.setEnabled(false);
-        jButtonEdit.setEnabled(false);
-        jComboBoxState.setEnabled(false);
         
         fillTable("select * from city inner join state on city.id_state = state.id_state");
     }//GEN-LAST:event_jButtonEditActionPerformed
