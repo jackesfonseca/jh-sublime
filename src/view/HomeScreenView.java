@@ -83,6 +83,11 @@ public class HomeScreenView extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem6.setText("Bairros");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuItem7.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
@@ -142,6 +147,12 @@ public class HomeScreenView extends javax.swing.JFrame {
         CityView cityRegister = new CityView();
         cityRegister.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        DistrictView districtView = new DistrictView();
+        districtView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
