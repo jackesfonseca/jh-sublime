@@ -44,4 +44,19 @@ public class CityControl {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro!\n ERRO: " + ex.getMessage());
         }
     }
+    
+    public void edit(CityModel city) {
+        dataBaseControl.dataBaseConnect();
+        
+        try {
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update city set name_city=?, id_state=? where id_city=?");
+            pst.setString(1, city.getName());
+            pst.setInt(2, city.getCodState());
+            pst.setInt(3, city.getCod());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+        }
+    }
 }

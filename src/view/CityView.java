@@ -342,13 +342,17 @@ public class CityView extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControlCity.conn.prepareStatement("update city set name_city=? where id_city=?");
-            pst.setString(1, jTextFieldName.getText());
-            pst.setInt(2, Integer.parseInt(jTextFieldCod.getText()));
-            pst.executeUpdate();
-            } catch (SQLException ex) {
+    
+        try{
+            city.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            city.setName(jTextFieldName.getText());
+            dataBaseControlCity.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
+            dataBaseControlCity.rs.first();
+            city.setCodState(dataBaseControlCity.rs.getInt("id_state"));
+            
+            cityControl.edit(city);
+            
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
         }
         
