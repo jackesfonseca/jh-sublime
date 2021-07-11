@@ -5,7 +5,7 @@
  */
 package controller;
 
-import view.HomeScreen;
+import view.HomeScreenView;
 
 /**
  *
@@ -19,7 +19,7 @@ public class HomeScreenControl {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        HomeScreen homeScreen = new HomeScreen();
+        HomeScreenView homeScreen = new HomeScreenView();
         homeScreen.setVisible(true);
     }
     

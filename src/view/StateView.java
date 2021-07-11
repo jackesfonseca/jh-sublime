@@ -6,12 +6,14 @@
 package view;
 
 import controller.DataBaseControl;
+import controller.StateControl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import model.StateModel;
 import model.TableModel;
 
 /**
@@ -21,6 +23,8 @@ import model.TableModel;
 public class StateView extends javax.swing.JFrame {
 
     DataBaseControl dataBaseControl = new DataBaseControl();
+    StateControl stateControl = new StateControl();
+    StateModel state = new StateModel();
 
     /**
      * Creates new form stateRegister
@@ -311,16 +315,9 @@ public class StateView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-            // TODO add your handling code here:
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("insert into state (name_state, fu_state)values(?,?)"); //passing sql to insert data
-            pst.setString(1, jTextFieldName.getText()); //passing parameters to insert data
-            pst.setString(2, jTextFieldFU.getText());
-            pst.executeUpdate(); // execute insert
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
-        }
+        state.setName(jTextFieldName.getText());
+        state.setFU(jTextFieldFU.getText());
+        stateControl.insert(state);
 
         jTextFieldCod.setText("");
         jTextFieldFU.setText("");
