@@ -9,6 +9,6 @@ package model;
  *
  * @author jackes
  */
-public class DistrictClass {
+public class DistrictModel {
     
 }
