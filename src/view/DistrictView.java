@@ -320,8 +320,25 @@ public class DistrictView extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-        district.setName(jTextFieldName.getText());
+        try {
+            district.setName(jTextFieldName.getText());
+            dataBaseControlCity.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
+            dataBaseControlCity.rs.first();
+            district.setCodCity(dataBaseControlCity.rs.getInt("id_city"));
+            
+            districtControl.insert(district);      
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+        }
         
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jComboBoxCity.setEnabled(false);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
