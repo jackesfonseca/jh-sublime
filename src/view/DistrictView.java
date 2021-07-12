@@ -7,6 +7,10 @@ package view;
 
 import controller.DataBaseControl;
 import controller.DistrictControl;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.DistrictModel;
 
 /**
@@ -25,6 +29,17 @@ public class DistrictView extends javax.swing.JFrame {
         initComponents();
         dataBaseControlDistrict.dataBaseConnect();
         dataBaseControlCity.dataBaseConnect();
+        dataBaseControlCity.executeSQL("select * from city order by name_city");
+        jComboBoxCity.removeAllItems();
+        try {
+            dataBaseControlCity.rs.first();
+            do {
+                jComboBoxCity.addItem(dataBaseControlCity.rs.getString("name_city"));
+            } while(dataBaseControlCity.rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
+        }
+        
     }
 
     /**
@@ -43,7 +58,7 @@ public class DistrictView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldCod = new javax.swing.JTextField();
-        jTextFieldDistrict = new javax.swing.JTextField();
+        jTextFieldName = new javax.swing.JTextField();
         jComboBoxCity = new javax.swing.JComboBox<>();
         jButtonNew = new javax.swing.JButton();
         jButtonSave = new javax.swing.JButton();
@@ -88,7 +103,7 @@ public class DistrictView extends javax.swing.JFrame {
 
         jTextFieldCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
-        jTextFieldDistrict.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
         jComboBoxCity.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jComboBoxCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -222,7 +237,7 @@ public class DistrictView extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -244,7 +259,7 @@ public class DistrictView extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAdd))
@@ -295,10 +310,18 @@ public class DistrictView extends javax.swing.JFrame {
 
     private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
         // TODO add your handling code here:
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(false);
+        jButtonSave.setEnabled(true);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
+        district.setName(jTextFieldName.getText());
+        
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
@@ -393,6 +416,6 @@ public class DistrictView extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextFieldCod;
-    private javax.swing.JTextField jTextFieldDistrict;
+    private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 }
