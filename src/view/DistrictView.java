@@ -359,10 +359,10 @@ public class DistrictView extends javax.swing.JFrame {
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
-        try {
-            dataBaseControlDistrict.rs.getInt("id_city");
+        try { 
             district.setCod(Integer.parseInt(jTextFieldCod.getText()));
             district.setName(jTextFieldName.getText());
+            dataBaseControlDistrict.rs.getInt("id_city");
             
             districtControl.delete(district);
             

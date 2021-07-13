@@ -51,7 +51,7 @@ public class DistrictControl {
     dataBaseControl.dataBaseConnect();
         
         try {
-            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update city set name_district=?, id_city=? where id_district=?");
+            PreparedStatement pst = dataBaseControl.conn.prepareStatement("update district set name_district=?, id_city=? where id_district=?");
             pst.setString(1, district.getName());
             pst.setInt(2, district.getCodCity());
             pst.setInt(3, district.getCod());
