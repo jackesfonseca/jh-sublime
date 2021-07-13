@@ -8,10 +8,13 @@ package view;
 import controller.DataBaseControl;
 import controller.DistrictControl;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import model.DistrictModel;
+import model.TableModel;
 
 /**
  *
@@ -22,6 +25,9 @@ public class DistrictView extends javax.swing.JFrame {
     DataBaseControl dataBaseControlCity = new DataBaseControl();
     DistrictModel district = new DistrictModel();
     DistrictControl districtControl = new DistrictControl();
+    
+    
+    
     /**
      * Creates new form DistrictView
      */
@@ -30,6 +36,7 @@ public class DistrictView extends javax.swing.JFrame {
         dataBaseControlDistrict.dataBaseConnect();
         dataBaseControlCity.dataBaseConnect();
         dataBaseControlCity.executeSQL("select * from city order by name_city");
+        fillTable("select * from district inner join city on district.id_city = city.id_city");
         jComboBoxCity.removeAllItems();
         try {
             dataBaseControlCity.rs.first();
@@ -70,7 +77,7 @@ public class DistrictView extends javax.swing.JFrame {
         jButtonLast = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableDistrict = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -102,11 +109,14 @@ public class DistrictView extends javax.swing.JFrame {
         jLabel4.setText("Cidade");
 
         jTextFieldCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldCod.setEnabled(false);
 
         jTextFieldName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldName.setEnabled(false);
 
         jComboBoxCity.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jComboBoxCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCity.setEnabled(false);
 
         jButtonNew.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonNew.setText("Novo");
@@ -118,6 +128,7 @@ public class DistrictView extends javax.swing.JFrame {
 
         jButtonSave.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonSave.setText("Salvar");
+        jButtonSave.setEnabled(false);
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
@@ -126,6 +137,7 @@ public class DistrictView extends javax.swing.JFrame {
 
         jButtonDelete.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonDelete.setText("Excluir");
+        jButtonDelete.setEnabled(false);
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
@@ -134,6 +146,7 @@ public class DistrictView extends javax.swing.JFrame {
 
         jButtonEdit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonEdit.setText("Editar");
+        jButtonEdit.setEnabled(false);
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditActionPerformed(evt);
@@ -180,18 +193,19 @@ public class DistrictView extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDistrict.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTableDistrict.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTableDistrict);
 
         jButtonAdd.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonAdd.setText("+");
@@ -339,30 +353,143 @@ public class DistrictView extends javax.swing.JFrame {
         jButtonDelete.setEnabled(false);
         jButtonEdit.setEnabled(false);
         jComboBoxCity.setEnabled(false);
+        
+        fillTable("select * from district inner join city on district.id_city = city.id_city");
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
+        try {
+            dataBaseControlDistrict.rs.getInt("id_city");
+            district.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            district.setName(jTextFieldName.getText());
+            
+            districtControl.delete(district);
+            
+            } catch (SQLException ex) {     
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro!\n ERRO: " + ex.getMessage());
+        }
+        
+        jTextFieldCod.setText("");
+        jTextFieldName.setText("");
+        jTextFieldName.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jComboBoxCity.setEnabled(false);
+        
+        fillTable("select * from district inner join city on district.id_city = city.id_city");
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
+        try{
+            district.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            district.setName(jTextFieldName.getText());
+            dataBaseControlDistrict.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
+            dataBaseControlDistrict.rs.first();
+            district.setCodCity(dataBaseControlDistrict.rs.getInt("id_city"));
+            
+            districtControl.edit(district);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+        }
+        
+        fillTable("select * from district inner join city on district.id_city = city.id_city");    
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            dataBaseControlDistrict.executeSQL("select * from district order by id_district");
+            dataBaseControlDistrict.rs.first();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlDistrict.rs.getInt("id_district")));
+            jTextFieldName.setText(dataBaseControlDistrict.rs.getString("name_district"));
+            dataBaseControlCity.executeSQL("select * from city where id_city=" + dataBaseControlDistrict.rs.getInt("id_city"));
+            dataBaseControlCity.rs.first();
+            jComboBoxCity.setSelectedItem(dataBaseControlCity.rs.getString("name_city"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //dataBaseControlDistrict.executeSQL("select * from district order by id_district");
+            dataBaseControlDistrict.rs.previous();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlDistrict.rs.getInt("id_district")));
+            jTextFieldName.setText(dataBaseControlDistrict.rs.getString("name_district"));
+            dataBaseControlCity.executeSQL("select * from city where id_city=" + dataBaseControlDistrict.rs.getInt("id_city"));
+            dataBaseControlCity.rs.first();
+            jComboBoxCity.setSelectedItem(dataBaseControlCity.rs.getString("name_city"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //dataBaseControlDistrict.executeSQL("select * from district order by id_district");
+            dataBaseControlDistrict.rs.next();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlDistrict.rs.getInt("id_district")));
+            jTextFieldName.setText(dataBaseControlDistrict.rs.getString("name_district"));
+            dataBaseControlCity.executeSQL("select * from city where id_city=" + dataBaseControlDistrict.rs.getInt("id_city"));
+            dataBaseControlCity.rs.first();
+            jComboBoxCity.setSelectedItem(dataBaseControlCity.rs.getString("name_city"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonNextActionPerformed
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            dataBaseControlDistrict.executeSQL("select * from district order by id_district");
+            dataBaseControlDistrict.rs.last();
+            jTextFieldCod.setText(String.valueOf(dataBaseControlDistrict.rs.getInt("id_district")));
+            jTextFieldName.setText(dataBaseControlDistrict.rs.getString("name_district"));
+            dataBaseControlCity.executeSQL("select * from city where id_city=" + dataBaseControlDistrict.rs.getInt("id_city"));
+            dataBaseControlCity.rs.first();
+            jComboBoxCity.setSelectedItem(dataBaseControlCity.rs.getString("name_city"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+       
+        jTextFieldName.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonLastActionPerformed
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
@@ -376,6 +503,36 @@ public class DistrictView extends javax.swing.JFrame {
         cityView.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
+    public void fillTable(String SQL) {
+        //DataBaseControl dataBaseControl = new DataBaseControl();
+        
+        ArrayList data = new ArrayList();
+
+        String[] columns = new String[]{"ID", "Bairro", "Cidade"};
+
+        dataBaseControlDistrict.executeSQL(SQL);
+        try {
+            dataBaseControlDistrict.rs.first();
+            do {
+                data.add(new Object[]{dataBaseControlDistrict.rs.getInt("id_district"), dataBaseControlDistrict.rs.getString("name_district"), dataBaseControlDistrict.rs.getString("name_city")});
+            } while (dataBaseControlDistrict.rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível preencher o ArrayList!\n ERRO: " + ex.getMessage());
+        }
+        
+        TableModel tableModel = new TableModel(data, columns);
+        jTableDistrict.setModel(tableModel);
+        jTableDistrict.getColumnModel().getColumn(0).setPreferredWidth(240);
+        jTableDistrict.getColumnModel().getColumn(0).setResizable(false);
+        jTableDistrict.getColumnModel().getColumn(1).setPreferredWidth(345);
+        jTableDistrict.getColumnModel().getColumn(1).setResizable(false);
+        jTableDistrict.getColumnModel().getColumn(2).setPreferredWidth(240);
+        jTableDistrict.getColumnModel().getColumn(2).setResizable(false);
+        jTableDistrict.getTableHeader().setReorderingAllowed(false);
+        jTableDistrict.setAutoResizeMode(jTableDistrict.AUTO_RESIZE_OFF);
+        jTableDistrict.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //jTableState.put("TableHeader.font",new Font("Arial", Font.BOLD, 18) );
+    }
     /**
      * @param args the command line arguments
      */
@@ -431,7 +588,7 @@ public class DistrictView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableDistrict;
     private javax.swing.JTextField jTextFieldCod;
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
