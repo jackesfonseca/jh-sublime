@@ -25,8 +25,7 @@ public class DistrictView extends javax.swing.JFrame {
     DataBaseControl dataBaseControlCity = new DataBaseControl();
     DistrictModel district = new DistrictModel();
     DistrictControl districtControl = new DistrictControl();
-    
-    
+    Boolean enableEditAction = false;
     
     /**
      * Creates new form DistrictView
@@ -334,15 +333,33 @@ public class DistrictView extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-        try {
-            district.setName(jTextFieldName.getText());
-            dataBaseControlCity.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
-            dataBaseControlCity.rs.first();
-            district.setCodCity(dataBaseControlCity.rs.getInt("id_city"));
+        
+        if(!enableEditAction){
+            try {
+                district.setName(jTextFieldName.getText());
+                dataBaseControlCity.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
+                dataBaseControlCity.rs.first();
+                district.setCodCity(dataBaseControlCity.rs.getInt("id_city"));
             
-            districtControl.insert(district);      
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+                districtControl.insert(district);      
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+            }
+        } else {
+            try{
+            district.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            district.setName(jTextFieldName.getText());
+            dataBaseControlDistrict.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
+            dataBaseControlDistrict.rs.first();
+            district.setCodCity(dataBaseControlDistrict.rs.getInt("id_city"));
+            
+            districtControl.edit(district);
+            
+            enableEditAction = false;
+            
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+            }
         }
         
         jTextFieldCod.setText("");
@@ -384,20 +401,13 @@ public class DistrictView extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
-        try{
-            district.setCod(Integer.parseInt(jTextFieldCod.getText()));
-            district.setName(jTextFieldName.getText());
-            dataBaseControlDistrict.executeSQL("select * from city where name_city='" + jComboBoxCity.getSelectedItem() + "'");
-            dataBaseControlDistrict.rs.first();
-            district.setCodCity(dataBaseControlDistrict.rs.getInt("id_city"));
-            
-            districtControl.edit(district);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
-        }
+        enableEditAction = true;
         
-        fillTable("select * from district inner join city on district.id_city = city.id_city");    
+        jButtonSave.setEnabled(true);
+        jButtonEdit.setEnabled(false);
+        jButtonNew.setEnabled(false);
+        jTextFieldName.setEnabled(true);
+        jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
@@ -415,12 +425,12 @@ public class DistrictView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxCity.setEnabled(true);
+        jComboBoxCity.setEnabled(false);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
@@ -438,12 +448,12 @@ public class DistrictView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxCity.setEnabled(true);
+        jComboBoxCity.setEnabled(false);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
@@ -461,12 +471,12 @@ public class DistrictView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxCity.setEnabled(true);
+        jComboBoxCity.setEnabled(false);
     }//GEN-LAST:event_jButtonNextActionPerformed
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
@@ -484,12 +494,12 @@ public class DistrictView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxCity.setEnabled(true);
+        jComboBoxCity.setEnabled(false);
     }//GEN-LAST:event_jButtonLastActionPerformed
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
