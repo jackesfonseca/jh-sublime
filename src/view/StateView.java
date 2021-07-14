@@ -25,7 +25,8 @@ public class StateView extends javax.swing.JFrame {
     DataBaseControl dataBaseControl = new DataBaseControl();
     StateControl stateControl = new StateControl();
     StateModel state = new StateModel();
-
+    Boolean enableEditAction = false;
+    
     /**
      * Creates new form stateRegister
      */
@@ -300,19 +301,31 @@ public class StateView extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
-        state.setName(jTextFieldName.getText());
-        state.setFU(jTextFieldFU.getText());
-        state.setCod(Integer.parseInt(jTextFieldCod.getText()));
-        stateControl.edit(state);
+        enableEditAction = true;
         
-        fillTable("select * from state order by id_state");
+        jButtonSave.setEnabled(true);
+        jButtonEdit.setEnabled(false);
+        jButtonNew.setEnabled(false);
+        jTextFieldName.setEnabled(true);
+        jTextFieldFU.setEnabled(true);
+        
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        state.setName(jTextFieldName.getText());
-        state.setFU(jTextFieldFU.getText());
-        stateControl.insert(state);
-
+        
+        if(!enableEditAction){
+            state.setName(jTextFieldName.getText());
+            state.setFU(jTextFieldFU.getText());
+            stateControl.insert(state);
+            
+        } else {
+            state.setName(jTextFieldName.getText());
+            state.setFU(jTextFieldFU.getText());
+            state.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            stateControl.edit(state);
+            enableEditAction = false;
+        }
+        
         jTextFieldCod.setText("");
         jTextFieldFU.setText("");
         jTextFieldName.setText("");
@@ -366,12 +379,6 @@ public class StateView extends javax.swing.JFrame {
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
         // TODO add your handling code here:
-        jButtonEdit.setEnabled(true);
-        jButtonDelete.setEnabled(true);
-        jTextFieldName.setEnabled(true);
-        jTextFieldFU.setEnabled(true);
-        jButtonNew.setEnabled(true);
-
         try {
             dataBaseControl.executeSQL("select * from state");
             dataBaseControl.rs.first();
@@ -381,16 +388,16 @@ public class StateView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
+        
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonNew.setEnabled(true);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
         // TODO add your handling code here:
-        jButtonEdit.setEnabled(true);
-        jButtonDelete.setEnabled(true);
-        jTextFieldName.setEnabled(true);
-        jTextFieldFU.setEnabled(true);
-        jButtonNew.setEnabled(true);
-
         try {
             dataBaseControl.executeSQL("select * from state");
             dataBaseControl.rs.last();
@@ -400,16 +407,16 @@ public class StateView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
+        
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonNew.setEnabled(true);
     }//GEN-LAST:event_jButtonLastActionPerformed
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
         // TODO add your handling code here:
-        jButtonEdit.setEnabled(true);
-        jButtonDelete.setEnabled(true);
-        jTextFieldName.setEnabled(true);
-        jTextFieldFU.setEnabled(true);
-        jButtonNew.setEnabled(true);
-
         try {
             dataBaseControl.rs.previous();
             jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_state")));
@@ -418,16 +425,16 @@ public class StateView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
+        
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonNew.setEnabled(true);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
         // TODO add your handling code here:
-        jButtonEdit.setEnabled(true);
-        jButtonDelete.setEnabled(true);
-        jTextFieldName.setEnabled(true);
-        jTextFieldFU.setEnabled(true);
-        jButtonNew.setEnabled(true);
-
         try {
             dataBaseControl.rs.next();
             jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_state")));
@@ -436,6 +443,12 @@ public class StateView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
+        jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jTextFieldName.setEnabled(false);
+        jTextFieldFU.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        
     }//GEN-LAST:event_jButtonNextActionPerformed
 
     public void fillTable(String SQL) {

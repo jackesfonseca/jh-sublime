@@ -23,6 +23,7 @@ public class CityView extends javax.swing.JFrame {
     DataBaseControl dataBaseControlCity = new DataBaseControl(); 
     CityModel city = new CityModel();
     CityControl cityControl = new CityControl();
+    Boolean enableEditAction = false;
     
     /**
      * Creates new form CityRegister
@@ -313,22 +314,40 @@ public class CityView extends javax.swing.JFrame {
         jTextFieldName.setEnabled(true);
         jButtonNew.setEnabled(false);
         jButtonSave.setEnabled(true);
-        //jButtonDelete.setEnabled(true);
-        //jButtonEdit.setEnabled(true);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 
-        try {
-            city.setName(jTextFieldName.getText());
-            dataBaseControlState.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
-            dataBaseControlState.rs.first();
-            city.setCodState(dataBaseControlState.rs.getInt("id_state"));
+        if(!enableEditAction){
+            try {
+                city.setName(jTextFieldName.getText());
+                dataBaseControlState.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
+                dataBaseControlState.rs.first();
+                city.setCodState(dataBaseControlState.rs.getInt("id_state"));
             
-            cityControl.insert(city);      
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+                cityControl.insert(city);      
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo cadastro!\n ERRO: " + ex.getMessage());
+            }
+        } else {
+            try{
+            city.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            city.setName(jTextFieldName.getText());
+            dataBaseControlCity.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
+            dataBaseControlCity.rs.first();
+            city.setCodState(dataBaseControlCity.rs.getInt("id_state"));
+            
+            cityControl.edit(city);
+            
+            enableEditAction = false;
+            
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
+            }   
+          
         }
         
         jTextFieldCod.setText("");
@@ -370,21 +389,13 @@ public class CityView extends javax.swing.JFrame {
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
-    
-        try{
-            city.setCod(Integer.parseInt(jTextFieldCod.getText()));
-            city.setName(jTextFieldName.getText());
-            dataBaseControlCity.executeSQL("select * from state where name_state='" + jComboBoxState.getSelectedItem() + "'");
-            dataBaseControlCity.rs.first();
-            city.setCodState(dataBaseControlCity.rs.getInt("id_state"));
-            
-            cityControl.edit(city);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível realizar a alteração!\n ERRO: " + ex.getMessage());
-        }
+        enableEditAction = true;
         
-        fillTable("select * from city inner join state on city.id_state = state.id_state");
+        jButtonSave.setEnabled(true);
+        jButtonEdit.setEnabled(false);
+        jButtonNew.setEnabled(false);
+        jTextFieldName.setEnabled(true);
+        jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
@@ -406,12 +417,12 @@ public class CityView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxState.setEnabled(true);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
@@ -429,12 +440,12 @@ public class CityView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxState.setEnabled(true);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
@@ -452,12 +463,12 @@ public class CityView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxState.setEnabled(true);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonNextActionPerformed
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
@@ -475,12 +486,12 @@ public class CityView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
         }
        
-        jTextFieldName.setEnabled(true);
+        jTextFieldName.setEnabled(false);
         jButtonNew.setEnabled(true);
         jButtonDelete.setEnabled(true);
         jButtonEdit.setEnabled(true);
         jButtonSave.setEnabled(false);
-        jComboBoxState.setEnabled(true);
+        jComboBoxState.setEnabled(false);
     }//GEN-LAST:event_jButtonLastActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
