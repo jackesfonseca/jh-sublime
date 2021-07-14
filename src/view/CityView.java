@@ -9,6 +9,8 @@ import controller.CityControl;
 import controller.DataBaseControl;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import model.CityModel;
@@ -23,6 +25,7 @@ public class CityView extends javax.swing.JFrame {
     DataBaseControl dataBaseControlCity = new DataBaseControl(); 
     CityModel city = new CityModel();
     CityControl cityControl = new CityControl();
+    DistrictView districtView = new DistrictView();
     Boolean enableEditAction = false;
     
     /**
@@ -34,15 +37,7 @@ public class CityView extends javax.swing.JFrame {
         dataBaseControlCity.dataBaseConnect();
         dataBaseControlState.executeSQL("select * from state order by name_state");
         fillTable("select * from city inner join state on city.id_state = state.id_state");
-        jComboBoxState.removeAllItems();
-        try {
-            dataBaseControlState.rs.first();
-            do {
-                jComboBoxState.addItem(dataBaseControlState.rs.getString("name_state"));
-            } while(dataBaseControlState.rs.next());
-        } catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
-        }
+        updateComboBox();
     }
 
     /**
@@ -359,6 +354,7 @@ public class CityView extends javax.swing.JFrame {
         jButtonEdit.setEnabled(false);
         jComboBoxState.setEnabled(false);
         
+        districtView.updateComboBox();
         fillTable("select * from city inner join state on city.id_state = state.id_state");
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -529,6 +525,18 @@ public class CityView extends javax.swing.JFrame {
         jTableCity.setAutoResizeMode(jTableCity.AUTO_RESIZE_OFF);
         jTableCity.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //jTableState.put("TableHeader.font",new Font("Arial", Font.BOLD, 18) );
+   }
+    
+   public void updateComboBox() {
+        jComboBoxState.removeAllItems();
+        try {
+            dataBaseControlState.rs.first();
+            do {
+                jComboBoxState.addItem(dataBaseControlState.rs.getString("name_state"));
+            } while(dataBaseControlState.rs.next());
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
+        } 
    }
     /**
      * @param args the command line arguments

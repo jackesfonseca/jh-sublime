@@ -36,16 +36,7 @@ public class DistrictView extends javax.swing.JFrame {
         dataBaseControlCity.dataBaseConnect();
         dataBaseControlCity.executeSQL("select * from city order by name_city");
         fillTable("select * from district inner join city on district.id_city = city.id_city");
-        jComboBoxCity.removeAllItems();
-        try {
-            dataBaseControlCity.rs.first();
-            do {
-                jComboBoxCity.addItem(dataBaseControlCity.rs.getString("name_city"));
-            } while(dataBaseControlCity.rs.next());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
-        }
-        
+        updateComboBox();
     }
 
     /**
@@ -372,6 +363,7 @@ public class DistrictView extends javax.swing.JFrame {
         jComboBoxCity.setEnabled(false);
         
         fillTable("select * from district inner join city on district.id_city = city.id_city");
+        
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
@@ -542,6 +534,18 @@ public class DistrictView extends javax.swing.JFrame {
         jTableDistrict.setAutoResizeMode(jTableDistrict.AUTO_RESIZE_OFF);
         jTableDistrict.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //jTableState.put("TableHeader.font",new Font("Arial", Font.BOLD, 18) );
+    }
+    
+    public void updateComboBox() {
+        jComboBoxCity.removeAllItems();
+        try {
+            dataBaseControlCity.rs.first();
+            do {
+                jComboBoxCity.addItem(dataBaseControlCity.rs.getString("name_city"));
+            } while(dataBaseControlCity.rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível preencher comboBox estado!\n ERRO: " + ex.getMessage());
+        }
     }
     /**
      * @param args the command line arguments
