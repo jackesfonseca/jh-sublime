@@ -305,7 +305,7 @@ public class StateView extends javax.swing.JFrame {
         
         jButtonSave.setEnabled(true);
         jButtonEdit.setEnabled(false);
-        jButtonNew.setEnabled(false);
+        jButtonNew.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jTextFieldFU.setEnabled(true);
         

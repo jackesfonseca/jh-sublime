@@ -397,7 +397,7 @@ public class DistrictView extends javax.swing.JFrame {
         
         jButtonSave.setEnabled(true);
         jButtonEdit.setEnabled(false);
-        jButtonNew.setEnabled(false);
+        jButtonNew.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jComboBoxCity.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed

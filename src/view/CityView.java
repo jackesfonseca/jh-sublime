@@ -389,7 +389,7 @@ public class CityView extends javax.swing.JFrame {
         
         jButtonSave.setEnabled(true);
         jButtonEdit.setEnabled(false);
-        jButtonNew.setEnabled(false);
+        jButtonNew.setEnabled(true);
         jTextFieldName.setEnabled(true);
         jComboBoxState.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed

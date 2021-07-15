@@ -5,22 +5,32 @@
  */
 package view;
 
+import controller.DataBaseControl;
+import controller.TelephoneControl;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import model.TelephoneModel;
 
 /**
  *
  * @author jackes
  */
 public class TelephoneView extends javax.swing.JFrame {
-
+    DataBaseControl dataBaseControl = new DataBaseControl();
+    TelephoneModel telephone = new TelephoneModel();
+    TelephoneControl telephoneControl = new TelephoneControl();
+    Boolean enableEditAction = false;
     /**
      * Creates new form TelephoneView
      */
     public TelephoneView() {
         initComponents();
+        dataBaseControl.dataBaseConnect();
         setMaskFormatter();
     }
 
@@ -69,6 +79,7 @@ public class TelephoneView extends javax.swing.JFrame {
 
         jButtonSave.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonSave.setText("Salvar");
+        jButtonSave.setEnabled(false);
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
@@ -77,6 +88,7 @@ public class TelephoneView extends javax.swing.JFrame {
 
         jButtonDelete.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonDelete.setText("Excluir");
+        jButtonDelete.setEnabled(false);
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
@@ -85,6 +97,7 @@ public class TelephoneView extends javax.swing.JFrame {
 
         jButtonEdit.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jButtonEdit.setText("Editar");
+        jButtonEdit.setEnabled(false);
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditActionPerformed(evt);
@@ -100,7 +113,9 @@ public class TelephoneView extends javax.swing.JFrame {
         });
 
         jTextFieldCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jTextFieldCod.setEnabled(false);
 
+        jFormattedTextFieldNum.setEnabled(false);
         jFormattedTextFieldNum.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
         jButtonFirst.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
@@ -230,18 +245,63 @@ public class TelephoneView extends javax.swing.JFrame {
 
     private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
         // TODO add your handling code here:
+        
+        jTextFieldCod.setText("");
+        jFormattedTextFieldNum.setText("");
+        jFormattedTextFieldNum.setEnabled(true);
+        jButtonNew.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonSave.setEnabled(true);
     }//GEN-LAST:event_jButtonNewActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
+        
+        if(!enableEditAction){
+            telephone.setTelephoneNumber(jFormattedTextFieldNum.getText());
+            telephoneControl.insert(telephone);
+            
+        } else {
+            telephone.setTelephoneNumber(jFormattedTextFieldNum.getText());
+            telephone.setCod(Integer.parseInt(jTextFieldCod.getText()));
+            telephoneControl.edit(telephone);
+            
+            enableEditAction = false;
+        }
+        
+        jTextFieldCod.setText("");
+        jFormattedTextFieldNum.setText("");
+        jFormattedTextFieldNum.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
+        telephone.setCod(Integer.parseInt(jTextFieldCod.getText()));
+        telephoneControl.delete(telephone);
+        
+        jTextFieldCod.setText("");
+        jFormattedTextFieldNum.setText("");
+        jFormattedTextFieldNum.setEnabled(false);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
         // TODO add your handling code here:
+        enableEditAction = true;
+        
+        jFormattedTextFieldNum.setEnabled(true);
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(false);
+        jButtonEdit.setEnabled(false);
+        jButtonSave.setEnabled(true);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
@@ -251,24 +311,73 @@ public class TelephoneView extends javax.swing.JFrame {
 
     private void jButtonFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFirstActionPerformed
         // TODO add your handling code here:
+        
+        try {
+            dataBaseControl.executeSQL("select * from telephone");
+            dataBaseControl.rs.first();
+            jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_telephone")));
+            jFormattedTextFieldNum.setText(dataBaseControl.rs.getString("number_telephone"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+        
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonFirstActionPerformed
 
     private void jButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousActionPerformed
         // TODO add your handling code here:
+        try {
+            //dataBaseControl.executeSQL("select * from telephone");
+            dataBaseControl.rs.previous();
+            jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_telephone")));
+            jFormattedTextFieldNum.setText(dataBaseControl.rs.getString("number_telephone"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+        
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonPreviousActionPerformed
 
     private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
         // TODO add your handling code here:
+        try {
+            //dataBaseControl.executeSQL("select * from telephone");
+            dataBaseControl.rs.next();
+            jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_telephone")));
+            jFormattedTextFieldNum.setText(dataBaseControl.rs.getString("number_telephone"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+        
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonNextActionPerformed
 
     private void jButtonLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLastActionPerformed
         // TODO add your handling code here:
+        try {
+            dataBaseControl.executeSQL("select * from telephone");
+            dataBaseControl.rs.last();
+            jTextFieldCod.setText(String.valueOf(dataBaseControl.rs.getInt("id_telephone")));
+            jFormattedTextFieldNum.setText(dataBaseControl.rs.getString("number_telephone"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível buscar dados!\n ERRO: " + ex.getMessage());
+        }
+        
+        jButtonNew.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonEdit.setEnabled(true);
+        jButtonSave.setEnabled(false);
     }//GEN-LAST:event_jButtonLastActionPerformed
 
-    public void fillTable() {
-        
-    }
-   
     public void setMaskFormatter() {
         try{
             MaskFormatter maskForm = new MaskFormatter("(##)#####-####");
