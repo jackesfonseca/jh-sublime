@@ -53,6 +53,11 @@ public class HomeScreenView extends javax.swing.JFrame {
 
         jMenuItem1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jMenuItem1.setText("Clientes");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
@@ -164,6 +169,12 @@ public class HomeScreenView extends javax.swing.JFrame {
         TelephoneView telephoneView = new TelephoneView();
         telephoneView.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        ClientView clientView = new ClientView();
+        clientView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

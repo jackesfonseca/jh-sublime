@@ -503,6 +503,7 @@ public class DistrictView extends javax.swing.JFrame {
         // TODO add your handling code here:
         CityView cityView = new CityView();  
         cityView.setVisible(true);
+        updateComboBox();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     public void fillTable(String SQL) {
